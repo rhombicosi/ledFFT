@@ -1,5 +1,4 @@
 /*
-fft_adc_serial.pde
 example sketch for testing the fft library.
 it takes in data on ADC0 (Analog0) and processes them
 with the fft. the data is sent out over the serial
@@ -57,41 +56,35 @@ void loop() {
       //Serial.println(fft_log_out[i]); // send out the data
     }
 
-    for(int k = 0; k <8;k++){
+    for (int k = 0; k <8;k++){
       for (int kk = 0; kk<16;kk++){
-          sum[k] += fft_log_out[kk+8*k];
-        }
-        sum[k]=map(sum[k]/16,0,128,0,7);
-        Serial.println(sum[k]);
+        sum[k] += fft_log_out[kk+8*k];
       }
-    
-
+      sum[k]=map(sum[k]/16,0,128,0,7);
+      Serial.println(sum[k]);
+    }
+  
   /*  for(int i=0;i<NUMPIXELS;i++){
 
     // pixels.Color takes RGB values, from 0,0,0 up to 255,255,255
     pixels.setPixelColor(i, pixels.Color(0,0,fft_log_out[i])); // Moderately bright green color.
-
     pixels.show(); // This sends the updated pixel color to the hardware.
-
     delay(delayval); // Delay for a period of time (in milliseconds).
 
   }
-*/
+  */
     
-    for(int i = 0; i < 8; i++) {
-      for(int j = 0; j < sum[i]; j++){
-           pixels.setPixelColor(i*8+j, pixels.Color(map(i,0,7,0,255),map(i,0,7,0,255),150));
-           pixels.show(); 
-           //delay(delayval);
-        }
+  for (int i = 0; i < 8; i++){
+    for (int j = 0; j < sum[i]; j++){
+       pixels.setPixelColor(i*8+j, pixels.Color(map(i,0,7,0,255),map(i,0,7,0,255),150));
+       pixels.show(); 
+       //delay(delayval);
+    }
 
-      for(int jj=sum[i]; jj < 8; jj++){
-           pixels.setPixelColor(i*8+jj, pixels.Color(0,0,0));
-           pixels.show(); 
-           //delay(delayval);
-        }
-      }
-
-  
-  
+    for (int jj=sum[i]; jj < 8; jj++){
+       pixels.setPixelColor(i*8+jj, pixels.Color(0,0,0));
+       pixels.show(); 
+       //delay(delayval);
+    }
+  }
 }
